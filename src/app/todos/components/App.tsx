@@ -6,20 +6,14 @@ import Filters from './Filters';
 import * as todosService from '../state/todos.service';
 import { useObservable } from '@libreact/use-observable';
 import { selectVisibleTodos$ } from '../state/todos.query';
-import List from '@material-ui/core/List';
 import { TodoModel } from '../state';
 
 function App() {
-  const listStyle = {
-    width: '100%',
-    maxWidth: 360,
-    flex: '1 1 auto',
-  };
   const [todos] = useObservable<TodoModel[], any>(selectVisibleTodos$);
   return (
     <Container>
       <AddTodo onAdd={todosService.addTodo} />
-      <List style={listStyle}>
+      <div>
         {todos.map((todo) => (
           <Todo
             key={todo.id}
@@ -28,7 +22,7 @@ function App() {
             onDelete={todosService.deleteTodo}
           />
         ))}
-      </List>
+      </div>
       <Filters onChange={todosService.updateTodosFilter} />
     </Container>
   );
