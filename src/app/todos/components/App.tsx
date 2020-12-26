@@ -13,7 +13,7 @@ function App() {
   return (
     <Container>
       <AddTodo onAdd={todosService.addTodo} />
-      <div>
+      <ul>
         {todos.map((todo) => (
           <Todo
             key={todo.id}
@@ -22,7 +22,7 @@ function App() {
             onDelete={todosService.deleteTodo}
           />
         ))}
-      </div>
+      </ul>
       <Filters onChange={todosService.updateTodosFilter} />
     </Container>
   );
