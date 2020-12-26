@@ -1,7 +1,9 @@
-import { createEntityStore, EntityState } from '@datorama/akita';
+import { ActiveState, createEntityStore, EntityState } from '@datorama/akita';
 import { TodoModel, VISIBILITY_FILTER } from './todo.model';
 
-export interface TodosState extends EntityState<TodoModel, string> {
+export interface TodosState
+  extends EntityState<TodoModel, string>,
+    ActiveState {
   ui: {
     filter: VISIBILITY_FILTER;
   };

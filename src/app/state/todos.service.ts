@@ -18,6 +18,14 @@ export function addTodo(text: string) {
   todosStore.add(todo);
 }
 
+export function selectTodo(id: string) {
+  todosStore.setActive(id);
+}
+
+export function editTodo(newText: string) {
+  todosStore.updateActive({ text: newText });
+}
+
 export function deleteTodo(id: string) {
   todosStore.remove(id);
 }
