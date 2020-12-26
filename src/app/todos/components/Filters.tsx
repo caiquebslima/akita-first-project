@@ -8,16 +8,12 @@ type FiltersProps = {
 
 function Filters({ onChange }: FiltersProps) {
   return (
-    <Container>
+    <div>
       <Filter id='SHOW_ACTIVE' onChange={onChange}></Filter>
       <Filter id='SHOW_COMPLETED' onChange={onChange}></Filter>
       <Filter id='SHOW_ALL' onChange={onChange}></Filter>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  height: 100px;
-`;
 
 export default Filters;

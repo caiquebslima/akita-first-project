@@ -11,7 +11,7 @@ import { TodoModel } from '../state';
 function App() {
   const [todos] = useObservable<TodoModel[], any>(selectVisibleTodos$);
   return (
-    <Container>
+    <div>
       <AddTodo onAdd={todosService.addTodo} />
       <ul>
         {todos.map((todo) => (
@@ -24,17 +24,8 @@ function App() {
         ))}
       </ul>
       <Filters onChange={todosService.updateTodosFilter} />
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-`;
 
 export default App;
