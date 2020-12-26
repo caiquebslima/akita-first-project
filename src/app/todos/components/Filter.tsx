@@ -7,8 +7,8 @@ export type FilterProps = {
   tooltip?: string;
 };
 
-function Filter({ children, onChange, id, tooltip }: FilterProps) {
-  return <button onClick={() => onChange(id)}>{children}</button>;
+function Filter({ onChange, id }: FilterProps) {
+  return <button onClick={() => onChange(id)}></button>;
 }
 
 export default Filter;

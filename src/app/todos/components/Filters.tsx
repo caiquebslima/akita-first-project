@@ -1,6 +1,5 @@
 import React from 'react';
 import Filter, { FilterProps } from './Filter';
-import styled from 'styled-components';
 
 type FiltersProps = {
   onChange: FilterProps['onChange'];

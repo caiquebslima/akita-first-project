@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import AddTodo from './AddTodo';
 import Todo from './Todo';
 import Filters from './Filters';
