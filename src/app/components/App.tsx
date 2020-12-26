@@ -6,8 +6,10 @@ import * as todosService from '../state/todos.service';
 import { useObservable } from '@libreact/use-observable';
 import { selectVisibleTodos$ } from '../state/todos.query';
 import { TodoModel } from '../state';
+import { akitaDevtools } from '@datorama/akita';
 
 function App() {
+  akitaDevtools();
   const [todos] = useObservable<TodoModel[], any>(selectVisibleTodos$);
   return (
     <div>

@@ -25,7 +25,9 @@ function AddToDo({ onAdd }: AddTodoProps) {
         value={text}
         onChange={onChange}
       />
-      <button type='submit' className='submit-button'></button>
+      <button type='submit' className='submit-button'>
+        Add
+      </button>
     </form>
   );
 }

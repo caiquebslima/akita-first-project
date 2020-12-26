@@ -1180,6 +1180,11 @@
     pluralize "7.0.0"
     shelljs "0.8.3"
 
+"@datorama/akita-ngdevtools@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@datorama/akita-ngdevtools/-/akita-ngdevtools-5.0.3.tgz#b0e1cda4c5893521b4f01a9dcefa5f18d4856e4b"
+  integrity sha512-Pq3OJxrRTxx/2wuaN91zMMBcCcvlUIAdD0cyKep0qRnXmsU5yQBSHaTV9o+pnvoFGagBY3t5yNWWqUfjUQQ3sw==
+
 "@datorama/akita@^5.3.0":
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-5.3.0.tgz#9b2919c4d5936515aaa35a49df6efb0708af3aae"

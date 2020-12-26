@@ -10,9 +10,11 @@ function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
   return (
     <li key={todo.id} onClick={() => onClick(todo.id)}>
       {todo.text}
-      <button onClick={() => !todo.completed}></button>
+      <button onClick={() => !todo.completed}>Complete</button>
 
-      <button aria-label='delete' onClick={() => onDelete(todo.id)}></button>
+      <button aria-label='delete' onClick={() => onDelete(todo.id)}>
+        Delete
+      </button>
     </li>
   );
 }
