@@ -3,13 +3,13 @@ import { TodoModel } from '../state/todo.model';
 import * as todosService from '../state/todos.service';
 
 interface TodoProps extends TodoModel {
-  // onEdit: (id: TodoModel['id'], newText: TodoModel['text']) => void;
   onClick: (id: TodoModel['id']) => void;
   onDelete: (id: TodoModel['id']) => void;
 }
 
 function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
   const [isEditing, setEditing] = React.useState(false);
+  const [value, setValue] = React.useState(todo.text);
 
   return (
     <div>
@@ -23,25 +23,47 @@ function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
       </button>
       {isEditing ? (
         <div>
-          <input
-            type='text'
-            value={todo.text}
-            onChange={(e) => todosService.editTodo(e.target.value)}
-          />
-          <button
-            onClick={() => {
+          <form
+            onSubmit={() => {
+              todosService.editTodo(value);
               setEditing(false);
             }}
           >
-            Save
-          </button>
+            <input
+              type='text'
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
+              value={value}
+            />
+            <button type='submit'>Save</button>
+            <button
+              onClick={() => {
+                // todosService.editTodo(todoText);
+                setEditing(false);
+                setValue(todo.text);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
         </div>
       ) : (
         <li key={todo.id} onClick={() => onClick(todo.id)}>
           {todo.text}
           <button onClick={() => !todo.completed}>Complete</button>
 
-          <button aria-label='delete' onClick={() => onDelete(todo.id)}>
+          <button
+            aria-label='delete'
+            onClick={() => {
+              const localObjects: any = localStorage.getItem('Todo List');
+              const parsedLocalObjects = [JSON.parse(localObjects)];
+              const filteredObjs = parsedLocalObjects.filter(
+                (obj) => obj.id === todo.id
+              );
+              onDelete(todo.id);
+            }}
+          >
             Delete
           </button>
         </li>
