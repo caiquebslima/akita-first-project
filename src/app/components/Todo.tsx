@@ -2,8 +2,8 @@ import React from 'react';
 import { TodoModel } from '../state/todo.model';
 import * as todosService from '../state/todos.service';
 import Button from '@material-ui/core/Button';
-import { Fab } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
+import { TextField } from '@material-ui/core';
+import '../styles/todo.scss';
 
 interface TodoProps extends TodoModel {
   onClick: (id: TodoModel['id']) => void;
@@ -11,75 +11,78 @@ interface TodoProps extends TodoModel {
 }
 
 function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
-  const [isEditing, setEditing] = React.useState(false);
+  const [editing, setEditing] = React.useState(false);
   const [value, setValue] = React.useState(todo.text);
 
   return (
-    <div>
-      {isEditing ? (
-        <form
-          onSubmit={() => {
-            todosService.editTodo(value);
-            setEditing(false);
+    <div className='Todo'>
+      <form
+        className='Todo__item'
+        onSubmit={(e) => {
+          e.preventDefault();
+          todosService.editTodo(value);
+        }}
+      >
+        <TextField
+          id='outlined-basic'
+          variant='outlined'
+          fullWidth
+          onChange={(e) => {
+            setValue(e.target.value);
           }}
-        >
-          <input
-            type='text'
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
-            value={value}
-          />
-          <Button variant='contained' color='primary' type='submit'>
-            Save
-          </Button>
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => {
-              setEditing(false);
-              setValue(todo.text);
-            }}
-          >
-            Cancel
-          </Button>
-        </form>
-      ) : (
-        <li key={todo.id} onClick={() => onClick(todo.id)}>
-          <Fab color='primary' size='small' aria-label='edit'>
-            <EditIcon />
-          </Fab>
-          {todo.text}
-          {todo.completed ? (
+          onFocus={() => setEditing(true)}
+          onBlur={() => setEditing(false)}
+          value={value}
+        />
+        {editing ? (
+          <div className='Todo__item--action-buttons'>
             <Button
               variant='contained'
-              color='primary'
-              size='small'
-              onClick={() => !todo.completed}
+              color='secondary'
+              onClick={() => {
+                setValue(todo.text);
+                setEditing(false);
+              }}
             >
-              ✓
+              Undo
             </Button>
-          ) : (
-            <Button
-              variant='outlined'
-              color='primary'
-              size='small'
-              onClick={() => !todo.completed}
-            >
-              ✓
+            <Button variant='contained' color='primary' type='submit'>
+              Save
             </Button>
-          )}
+          </div>
+        ) : (
+          ''
+        )}
 
+        {todo.completed ? (
           <Button
             variant='contained'
+            color='primary'
             size='small'
-            color='secondary'
-            onClick={() => onDelete(todo.id)}
+            onClick={() => !todo.completed}
           >
-            ✕
+            ✓
           </Button>
-        </li>
-      )}
+        ) : (
+          <Button
+            variant='outlined'
+            color='primary'
+            size='small'
+            onClick={() => !todo.completed}
+          >
+            ✓
+          </Button>
+        )}
+
+        <Button
+          variant='contained'
+          size='small'
+          color='secondary'
+          onClick={() => onDelete(todo.id)}
+        >
+          ✕
+        </Button>
+      </form>
     </div>
   );
 }
