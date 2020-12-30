@@ -3,7 +3,6 @@ import {
   createEntityStore,
   EntityState,
   persistState,
-  StoreConfig,
 } from '@datorama/akita';
 import { TodoModel, VISIBILITY_FILTER } from './todo.model';
 

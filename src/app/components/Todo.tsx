@@ -13,58 +13,45 @@ function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
 
   return (
     <div>
-      <button
-        onClick={() => {
-          setEditing(true);
-          todosService.selectTodo(todo.id);
-        }}
-      >
-        Edit
-      </button>
       {isEditing ? (
-        <div>
-          <form
-            onSubmit={() => {
-              todosService.editTodo(value);
+        <form
+          onSubmit={() => {
+            todosService.editTodo(value);
+            setEditing(false);
+          }}
+        >
+          <input
+            type='text'
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            value={value}
+          />
+          <button type='submit'>Save</button>
+          <button
+            onClick={() => {
               setEditing(false);
+              setValue(todo.text);
             }}
           >
-            <input
-              type='text'
-              onChange={(e) => {
-                setValue(e.target.value);
-              }}
-              value={value}
-            />
-            <button type='submit'>Save</button>
-            <button
-              onClick={() => {
-                // todosService.editTodo(todoText);
-                setEditing(false);
-                setValue(todo.text);
-              }}
-            >
-              Cancel
-            </button>
-          </form>
-        </div>
+            Cancel
+          </button>
+        </form>
       ) : (
         <li key={todo.id} onClick={() => onClick(todo.id)}>
-          {todo.text}
-          <button onClick={() => !todo.completed}>Complete</button>
-
           <button
-            aria-label='delete'
             onClick={() => {
-              const localObjects: any = localStorage.getItem('Todo List');
-              const parsedLocalObjects = [JSON.parse(localObjects)];
-              const filteredObjs = parsedLocalObjects.filter(
-                (obj) => obj.id === todo.id
-              );
-              onDelete(todo.id);
+              setEditing(true);
+              todosService.selectTodo(todo.id);
             }}
           >
-            Delete
+            ✎
+          </button>
+          {todo.text}
+          <button onClick={() => !todo.completed}>✓</button>
+
+          <button aria-label='delete' onClick={() => onDelete(todo.id)}>
+            ✕
           </button>
         </li>
       )}
