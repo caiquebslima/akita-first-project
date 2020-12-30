@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import React from 'react';
 
 export type FilterProps = {
@@ -8,7 +9,17 @@ export type FilterProps = {
 };
 
 function Filter({ onChange, id, tooltip }: FilterProps) {
-  return <button onClick={() => onChange(id)}>{tooltip}</button>;
+  return (
+    <Button
+      variant='outlined'
+      color='primary'
+      onClick={() => {
+        onChange(id);
+      }}
+    >
+      {tooltip}
+    </Button>
+  );
 }
 
 export default Filter;

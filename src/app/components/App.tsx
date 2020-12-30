@@ -9,6 +9,7 @@ import { TodoModel } from '../state';
 import { akitaDevtools } from '@datorama/akita';
 import { useDrag } from 'react-use-gesture';
 import '../styles/app.scss';
+import { Button } from '@material-ui/core';
 
 function App() {
   akitaDevtools();
@@ -24,7 +25,8 @@ function App() {
   return (
     <div className='container' {...bind()}>
       <AddTodo onAdd={todosService.addTodo} />
-      <button
+      <Button
+        variant='contained'
         onClick={() => {
           todosService.addTodo('Passear com os cachorros');
           todosService.addTodo('Lavar o quintal');
@@ -33,7 +35,7 @@ function App() {
         }}
       >
         Populate list
-      </button>
+      </Button>
       <ul>
         {todos.map((todo) => (
           <Todo

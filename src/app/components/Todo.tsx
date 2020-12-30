@@ -1,6 +1,9 @@
 import React from 'react';
 import { TodoModel } from '../state/todo.model';
 import * as todosService from '../state/todos.service';
+import Button from '@material-ui/core/Button';
+import { Fab } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 interface TodoProps extends TodoModel {
   onClick: (id: TodoModel['id']) => void;
@@ -27,32 +30,54 @@ function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
             }}
             value={value}
           />
-          <button type='submit'>Save</button>
-          <button
+          <Button variant='contained' color='primary' type='submit'>
+            Save
+          </Button>
+          <Button
+            variant='contained'
+            color='secondary'
             onClick={() => {
               setEditing(false);
               setValue(todo.text);
             }}
           >
             Cancel
-          </button>
+          </Button>
         </form>
       ) : (
         <li key={todo.id} onClick={() => onClick(todo.id)}>
-          <button
-            onClick={() => {
-              setEditing(true);
-              todosService.selectTodo(todo.id);
-            }}
-          >
-            ✎
-          </button>
+          <Fab color='primary' size='small' aria-label='edit'>
+            <EditIcon />
+          </Fab>
           {todo.text}
-          <button onClick={() => !todo.completed}>✓</button>
+          {todo.completed ? (
+            <Button
+              variant='contained'
+              color='primary'
+              size='small'
+              onClick={() => !todo.completed}
+            >
+              ✓
+            </Button>
+          ) : (
+            <Button
+              variant='outlined'
+              color='primary'
+              size='small'
+              onClick={() => !todo.completed}
+            >
+              ✓
+            </Button>
+          )}
 
-          <button aria-label='delete' onClick={() => onDelete(todo.id)}>
+          <Button
+            variant='contained'
+            size='small'
+            color='secondary'
+            onClick={() => onDelete(todo.id)}
+          >
             ✕
-          </button>
+          </Button>
         </li>
       )}
     </div>

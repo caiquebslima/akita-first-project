@@ -6,6 +6,7 @@ type FiltersProps = {
 };
 
 function Filters({ onChange }: FiltersProps) {
+  // const [active, setActive] = React.useState(false)
   return (
     <div>
       <Filter id='SHOW_ACTIVE' onChange={onChange} tooltip={'Active'}></Filter>

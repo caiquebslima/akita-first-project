@@ -1,4 +1,6 @@
+import { Fab } from '@material-ui/core';
 import React, { useState } from 'react';
+import AddIcon from '@material-ui/icons/Add';
 
 type AddTodoProps = {
   onAdd(text: string): void;
@@ -25,9 +27,9 @@ function AddToDo({ onAdd }: AddTodoProps) {
         value={text}
         onChange={onChange}
       />
-      <button type='submit' className='submit-button'>
-        Add
-      </button>
+      <Fab size='small' color='primary' aria-label='add' type='submit'>
+        <AddIcon />
+      </Fab>
     </form>
   );
 }
