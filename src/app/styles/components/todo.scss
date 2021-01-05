@@ -1,0 +1,16 @@
+.Todo {
+  padding: 10px;
+  &__item {
+    &--buttons {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+  .active {
+    visibility: visible;
+  }
+  .unactive {
+    visibility: hidden;
+  }
+}
