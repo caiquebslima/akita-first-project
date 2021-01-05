@@ -4,7 +4,10 @@ import Todo from './Todo';
 import Filters from './Filters';
 import * as todosService from '../state/todos.service';
 import { useObservable } from '@libreact/use-observable';
-import { selectVisibleTodos$ } from '../state/todos.query';
+import {
+  selectVisibilityFilter$,
+  selectVisibleTodos$,
+} from '../state/todos.query';
 import { TodoModel } from '../state';
 import { akitaDevtools } from '@datorama/akita';
 import { useDrag } from 'react-use-gesture';
@@ -13,8 +16,9 @@ import { Button } from '@material-ui/core';
 
 function App() {
   akitaDevtools();
-
   const [todos] = useObservable<TodoModel[], any>(selectVisibleTodos$);
+  const filters = useObservable(selectVisibilityFilter$);
+  const activeFilter = filters[0];
 
   const bind = useDrag(({ swipe, last, tap }) => {
     if (!!last && !tap) {
@@ -23,7 +27,7 @@ function App() {
   });
 
   return (
-    <div className='container' {...bind()}>
+    <div className='container'>
       <AddTodo onAdd={todosService.addTodo} />
       <Button
         variant='contained'
@@ -36,17 +40,21 @@ function App() {
       >
         Populate list
       </Button>
-      <ul>
+      <ul className='todo-area'>
         {todos.map((todo) => (
           <Todo
             key={todo.id}
             {...todo}
             onClick={todosService.toggleTodo}
             onDelete={todosService.deleteTodo}
+            {...bind()}
           />
         ))}
       </ul>
-      <Filters onChange={todosService.updateTodosFilter} />
+      <Filters
+        onChange={todosService.updateTodosFilter}
+        active={activeFilter}
+      />
     </div>
   );
 }

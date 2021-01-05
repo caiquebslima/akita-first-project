@@ -1,6 +1,7 @@
-import { Fab } from '@material-ui/core';
+import { Fab, TextField } from '@material-ui/core';
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
+import '../styles/components/add-todo.scss';
 
 type AddTodoProps = {
   onAdd(text: string): void;
@@ -20,16 +21,19 @@ function AddToDo({ onAdd }: AddTodoProps) {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input
-        type='text'
-        className='input-text'
-        value={text}
+    <form className='add-todo' onSubmit={onSubmit}>
+      <TextField
+        id='outlined-basic'
+        variant='standard'
+        fullWidth
         onChange={onChange}
+        value={text}
       />
-      <Fab size='small' color='primary' aria-label='add' type='submit'>
-        <AddIcon />
-      </Fab>
+      <div className='add-todo__fab'>
+        <Fab size='small' color='primary' aria-label='add' type='submit'>
+          <AddIcon />
+        </Fab>
+      </div>
     </form>
   );
 }

@@ -3,7 +3,9 @@ import { TodoModel } from '../state/todo.model';
 import * as todosService from '../state/todos.service';
 import Button from '@material-ui/core/Button';
 import { TextField } from '@material-ui/core';
-import '../styles/todo.scss';
+import '../styles/components/todo.scss';
+import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 
 interface TodoProps extends TodoModel {
   onClick: (id: TodoModel['id']) => void;
@@ -11,7 +13,7 @@ interface TodoProps extends TodoModel {
 }
 
 function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
-  const [editing, setEditing] = React.useState(false);
+  const [active, setActive] = React.useState('unactive');
   const [value, setValue] = React.useState(todo.text);
 
   return (
@@ -30,58 +32,57 @@ function ToDo({ onClick, onDelete, ...todo }: TodoProps) {
           onChange={(e) => {
             setValue(e.target.value);
           }}
-          onFocus={() => setEditing(true)}
-          onBlur={() => setEditing(false)}
+          onFocus={() => setActive('active')}
+          onBlur={() => {
+            setTimeout(function () {
+              setActive('unactive');
+            }, 100);
+          }}
           value={value}
         />
-        {editing ? (
-          <div className='Todo__item--action-buttons'>
+        <div className='Todo__item--buttons'>
+          <div className={`edit-buttons ${active}`}>
             <Button
               variant='contained'
               color='secondary'
               onClick={() => {
                 setValue(todo.text);
-                setEditing(false);
+                setActive('unactive');
               }}
+              size='small'
             >
               Undo
             </Button>
-            <Button variant='contained' color='primary' type='submit'>
+            <Button
+              variant='contained'
+              color='primary'
+              type='submit'
+              size='small'
+              onClick={() => setActive('unactive')}
+            >
               Save
             </Button>
           </div>
-        ) : (
-          ''
-        )}
 
-        {todo.completed ? (
-          <Button
-            variant='contained'
-            color='primary'
-            size='small'
-            onClick={() => !todo.completed}
-          >
-            ✓
-          </Button>
-        ) : (
-          <Button
-            variant='outlined'
-            color='primary'
-            size='small'
-            onClick={() => !todo.completed}
-          >
-            ✓
-          </Button>
-        )}
-
-        <Button
-          variant='contained'
-          size='small'
-          color='secondary'
-          onClick={() => onDelete(todo.id)}
-        >
-          ✕
-        </Button>
+          <div className='save-buttons'>
+            <Button
+              variant='contained'
+              size='small'
+              color='secondary'
+              onClick={() => onDelete(todo.id)}
+            >
+              <DeleteIcon />
+            </Button>
+            <Button
+              variant='contained'
+              color='primary'
+              size='small'
+              onClick={() => !todo.completed}
+            >
+              <DoneIcon />
+            </Button>
+          </div>
+        </div>
       </form>
     </div>
   );
